@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp
+  namespace: 9-example
+  annotations:
+    cert-manager.io/cluster-issuer: http-01-production
+spec:
+  ingressClassName: external-nginx
+  rules:
+    - host: ex9.pgajewsk.pl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: myapp
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - ex9.pgajewsk.pl
+      secretName: ex9-pgajewsk-pl
